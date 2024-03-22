@@ -53,6 +53,28 @@ function betUnderdog(bout) {
     return Math.max(bout.oddsA, bout.oddsB);
 }
 
+/**
+ *
+ * Uriah Hall 245.0 vs Paulo Costa -290 winner:Paulo Costa
+ * Bet 290 on costa, get 290+100 back so +100
+ *
+ * Paul Felder -170.0 vs Mike Perry 150 winner:Mike Perry
+ * Bet 170 on Felder, get 0 back so -170
+ */
+function betFavorite(bout) {
+    if (bout.oddsA === bout.oddsB) {
+        return 0;
+    }
+
+    // Win case: the favorite won so return 100
+    if ((bout.oddsA < bout.oddsB && bout.winner === bout.nameA) || (bout.oddsB < bout.oddsA && bout.winner === bout.nameB)) {
+        return 100;
+    }
+
+    // Lose case: lose the odds on the favorite
+    return Math.min(bout.oddsA, bout.oddsB);
+}
+
 function show(text) {
     const results = document.getElementById("results");
     const p = document.createElement("h3");
@@ -73,6 +95,12 @@ function main() {
         balance += betUnderdog(bout);
     }
     show("Underdog betting policy: " + balance);
+
+    balance = 0;
+    for (const bout of bouts) {
+        balance += betFavorite(bout);
+    }
+    show("Favorite betting policy: " + balance);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -3,13 +3,19 @@ function parseBoutStrings() {
 
     // Format the raw input strings into something useful
     for(const boutString of boutStrings) {
-        const b = boutString.split(",");
+        const i = boutString.split(",");
         output.push({
-            nameA:b[0],
-            nameB:b[1],
-            oddsA:b[2],
-            oddsB:b[3],
-            winner:b[8] === "Red" ? b[0] : b[1],
+            nameA:i[0],
+            heightA:i[56],
+            reachA:i[57],
+            weightA:i[58],
+            oddsA:i[2],
+            nameB:i[1],
+            heightB:i[33],
+            reachB:i[34],
+            weightB:i[35],
+            oddsB:i[3],
+            winner:i[8] === "Red" ? i[0] : i[1],
         })
     }
     return output;
@@ -22,7 +28,11 @@ function showTestResults(bouts) {
     for (var x = startIndex; x < Math.min(startIndex + 5, boutStrings.length); x++) {
         const p = document.createElement("h3");
         const v = bouts[x];
-        p.textContent = "" + v.nameA + " " + v.oddsA + " vs " + v.nameB + " " + v.oddsB + " winner:" + v.winner;
+        var text = "";
+        text += "name:" + v.nameA + " weight:" + v.weightA + " height:" + v.heightA + " reach:" + v.reachA + " odds:" + v.oddsA;
+        text += " VERSUS "
+        text += "name:" + v.nameB + " weight:" + v.weightB + " height:" + v.heightB + " reach:" + v.reachB + " odds:" + v.oddsB;
+        p.textContent = text;
         test.appendChild(p);
     }
 }
@@ -85,10 +95,7 @@ function show(text) {
 function main() {
     const bouts = parseBoutStrings();
 
-    const showParsingTestResults = false;
-    if (showParsingTestResults) {
-        showTestResults(bouts);
-    }
+    // showTestResults(bouts);
 
     var balance = 0;
     for (const bout of bouts) {

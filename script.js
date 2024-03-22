@@ -123,6 +123,14 @@ function betLighter(bout) {
     }
 }
 
+function betLongerName(bout) {
+    if (bout.nameA.length > bout.nameB.length) {
+        return betA(bout);
+    } else {
+        return betB(bout);
+    }
+}
+
 function betA(bout) {
     // Win case
     if (bout.winner == bout.nameA) {
@@ -175,37 +183,43 @@ function main() {
     for (const bout of bouts) {
         balance += betUnderdog(bout);
     }
-    show("Underdog betting policy: " + balance);
+    show("Always bet on the underdog: " + balance);
 
     balance = 0;
     for (const bout of bouts) {
         balance += betFavorite(bout);
     }
-    show("Favorite betting policy: " + balance);
+    show("Always bet on the favorite: " + balance);
 
     balance = 0;
     for (const bout of bouts) {
         balance += betTaller(bout);
     }
-    show("Taller betting policy: " + balance);
+    show("Always bet on the taller fighter: " + balance);
 
     balance = 0;
     for (const bout of bouts) {
         balance += betHeavier(bout);
     }
-    show("Heavier betting policy: " + balance);
+    show("Always bet on the heavier fighter: " + balance);
 
     balance = 0;
     for (const bout of bouts) {
         balance += betLighter(bout);
     }
-    show("Lighter betting policy: " + balance);
+    show("Always bet on the lighter fighter: " + balance);
 
     balance = 0;
     for (const bout of bouts) {
         balance += betLongerReach(bout);
     }
-    show("Longer reach betting policy: " + balance);
+    show("Always bet on the fighter with longer reach: " + balance);
+
+    balance = 0;
+    for (const bout of bouts) {
+        balance += betLongerName(bout);
+    }
+    show("Always bet on the fighter with a longer name: " + balance);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

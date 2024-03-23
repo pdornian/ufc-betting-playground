@@ -72,23 +72,23 @@ function betUnderdog(bout) {
 /**
  *
  * Uriah Hall 245.0 vs Paulo Costa -290 winner:Paulo Costa
- * Bet 290 on costa, get 290+100 back so +100
+ * Bet 100 on costa, win, get 100/290 * 100 = 34.48
  *
  * Paul Felder -170.0 vs Mike Perry 150 winner:Mike Perry
- * Bet 170 on Felder, get 0 back so -170
+ * Bet 100 on felder, lose, -100
  */
 function betFavorite(bout) {
     if (bout.oddsA === bout.oddsB) {
         return 0;
     }
 
-    // Win case: the favorite won so return 100
+    // Win case
     if ((bout.oddsA < bout.oddsB && bout.winner === bout.nameA) || (bout.oddsB < bout.oddsA && bout.winner === bout.nameB)) {
-        return 100;
+        return (100 / Math.abs(Math.min(bout.oddsA, bout.oddsB))) * 100;
     }
 
-    // Lose case: lose the odds on the favorite
-    return Math.min(bout.oddsA, bout.oddsB);
+    // Lose case
+    return -100;
 }
 
 function betTaller(bout) {
@@ -174,52 +174,57 @@ function show(text) {
     results.appendChild(p);
 }
 
+const USDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
+
 function main() {
     const bouts = parseBoutStrings();
 
     // showTestResults(bouts);
 
-    var balance = 0.0;
-    for (const bout of bouts) {
-        balance += betUnderdog(bout);
-    }
-    show("Always bet on the underdog: " + balance);
-
     balance = 0;
     for (const bout of bouts) {
         balance += betFavorite(bout);
     }
-    show("Always bet on the favorite: " + balance);
+    show("Always bet on the favorite: " + USDollar.format(balance));
 
-    balance = 0;
-    for (const bout of bouts) {
-        balance += betTaller(bout);
-    }
-    show("Always bet on the taller fighter: " + balance);
+    // var balance = 0.0;
+    // for (const bout of bouts) {
+    //     balance += betUnderdog(bout);
+    // }
+    // show("Always bet on the underdog: " + balance);
 
-    balance = 0;
-    for (const bout of bouts) {
-        balance += betHeavier(bout);
-    }
-    show("Always bet on the heavier fighter: " + balance);
+    // balance = 0;
+    // for (const bout of bouts) {
+    //     balance += betTaller(bout);
+    // }
+    // show("Always bet on the taller fighter: " + balance);
 
-    balance = 0;
-    for (const bout of bouts) {
-        balance += betLighter(bout);
-    }
-    show("Always bet on the lighter fighter: " + balance);
+    // balance = 0;
+    // for (const bout of bouts) {
+    //     balance += betHeavier(bout);
+    // }
+    // show("Always bet on the heavier fighter: " + balance);
 
-    balance = 0;
-    for (const bout of bouts) {
-        balance += betLongerReach(bout);
-    }
-    show("Always bet on the fighter with longer reach: " + balance);
+    // balance = 0;
+    // for (const bout of bouts) {
+    //     balance += betLighter(bout);
+    // }
+    // show("Always bet on the lighter fighter: " + balance);
 
-    balance = 0;
-    for (const bout of bouts) {
-        balance += betLongerName(bout);
-    }
-    show("Always bet on the fighter with a longer name: " + balance);
+    // balance = 0;
+    // for (const bout of bouts) {
+    //     balance += betLongerReach(bout);
+    // }
+    // show("Always bet on the fighter with longer reach: " + balance);
+
+    // balance = 0;
+    // for (const bout of bouts) {
+    //     balance += betLongerName(bout);
+    // }
+    // show("Always bet on the fighter with a longer name: " + balance);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

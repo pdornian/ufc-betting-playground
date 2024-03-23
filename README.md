@@ -18,3 +18,5 @@ Open script.js and find the `main()` function. Here you can add new betting poli
 ## Thank you
 
 Data from https://github.com/shortlikeafox/tiger-millionaire/blob/master/data/kaggle_data/ufc-master.csv
+
+![angry red dana white](media/tomato.jpeg)
